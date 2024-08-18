@@ -6,9 +6,7 @@ It uses the Gin framework in Go which gives it the benefit of being robust and h
 
 If you would like to compile for your specific device, you can use the built go functions
 
----
+## Setup
 
-# Setup
-
-Run `go mod download`:
+Run `go mod download`
 Then `go run .`
