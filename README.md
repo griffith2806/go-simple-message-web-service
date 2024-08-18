@@ -8,6 +8,16 @@ If you would like to compile for your specific device, you can use the built go 
 
 ## Setup
 
+To setup on a specific target machine:
+
 Run `go mod download`
 
 Then `go run .`
+
+To setup through docker ensure you have docker setup then build the docker container:
+
+`docker build -t go-message-app .`
+
+Then run the container exposing port 8080
+
+`docker run -d -p 8080:8080 --name go-message-app-container go-message-app`
