@@ -8,8 +8,8 @@ import (
 )
 
 func RegisterRoutes(server *gin.Engine) {
-	docs.SwaggerInfo.BasePath = "/" //Swagger relative route is /swagger/index.html
-	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	docs.SwaggerInfo.BasePath = "/"
+	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler)) //Swagger relative route is /swagger/index.html
 
 	server.GET("/messages", getMessages)
 	server.GET("/messages/:id", getMessage)
