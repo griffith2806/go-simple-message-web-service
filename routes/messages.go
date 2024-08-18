@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"example.com/gg-messages/models"
@@ -51,7 +52,8 @@ func createMessage(context *gin.Context) {
 		return
 	}
 
-	message.Message = string(bytes)
+	messageText := string(bytes)
+	message.Message = strings.TrimSpace(messageText)
 	message.CreatedAt = time.Now()
 	err = message.Save()
 
