@@ -9,4 +9,5 @@ If you would like to compile for your specific device, you can use the built go 
 ## Setup
 
 Run `go mod download`
+
 Then `go run .`
