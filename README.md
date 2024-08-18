@@ -8,11 +8,15 @@ If you would like to compile for your specific device, you can use the built go 
 
 ## Setup
 
+### Target Machine
+
 To setup on a specific target machine:
 
 Run `go mod download`
 
 Then `go run .`
+
+### Docker
 
 To setup through docker ensure you have docker setup then build the docker container:
 
