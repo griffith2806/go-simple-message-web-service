@@ -10,6 +10,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
+type CreatedResponse struct {
+	Id int64 `json:"id"`
+}
+
+// @BasePath /messages
+
+// GetMessages godoc
+// @Summary Retrieve all messages
+// @Description Fetches a list of all messages.
+// @Tags messages
+// @Produce json
+// @Success 200 {array} string "List of messages"
+// @Failure 500 {object} ErrorResponse "Error message"
+// @Router /messages [get]
 func getMessages(context *gin.Context) {
 	messages, err := models.GetAllMessages()
 	if err != nil {
@@ -20,6 +38,17 @@ func getMessages(context *gin.Context) {
 	context.JSON(http.StatusOK, messages)
 }
 
+// GetMessage godoc
+// @Summary Retrieve a message by ID
+// @Description Fetches a single message by its ID.
+// @Tags messages
+// @Produce plain
+// @Param id path int64 true "Message ID"
+// @Success 200 {string} string "Message text"
+// @Failure 400 {object} ErrorResponse "Invalid ID supplied"
+// @Failure 404 {object} ErrorResponse "Message not found"
+// @Failure 500 {object} ErrorResponse "Internal server error"
+// @Router /messages/{id} [get]
 func getMessage(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
@@ -40,6 +69,17 @@ func getMessage(context *gin.Context) {
 	context.String(http.StatusOK, messageText)
 }
 
+// CreateMessage godoc
+// @Summary Create a new message
+// @Description Creates a new message with the provided content.
+// @Tags messages
+// @Accept plain
+// @Produce json
+// @Param message body string true "Message content"
+// @Success 201 {object} CreatedResponse "Created message ID"
+// @Failure 400 {object} ErrorResponse "Bad request: Empty message"
+// @Failure 500 {object} ErrorResponse "Internal server error"
+// @Router /messages [post]
 func createMessage(context *gin.Context) {
 	var message models.Message
 	bytes, err := context.GetRawData()

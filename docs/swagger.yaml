@@ -1,0 +1,94 @@
+definitions:
+  routes.CreatedResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  routes.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /messages:
+    get:
+      description: Fetches a list of all messages.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of messages
+          schema:
+            items:
+              type: string
+            type: array
+        "500":
+          description: Error message
+          schema:
+            $ref: '#/definitions/routes.ErrorResponse'
+      summary: Retrieve all messages
+      tags:
+      - messages
+    post:
+      consumes:
+      - text/plain
+      description: Creates a new message with the provided content.
+      parameters:
+      - description: Message content
+        in: body
+        name: message
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created message ID
+          schema:
+            $ref: '#/definitions/routes.CreatedResponse'
+        "400":
+          description: 'Bad request: Empty message'
+          schema:
+            $ref: '#/definitions/routes.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/routes.ErrorResponse'
+      summary: Create a new message
+      tags:
+      - messages
+  /messages/{id}:
+    get:
+      description: Fetches a single message by its ID.
+      parameters:
+      - description: Message ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Message text
+          schema:
+            type: string
+        "400":
+          description: Invalid ID supplied
+          schema:
+            $ref: '#/definitions/routes.ErrorResponse'
+        "404":
+          description: Message not found
+          schema:
+            $ref: '#/definitions/routes.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/routes.ErrorResponse'
+      summary: Retrieve a message by ID
+      tags:
+      - messages
+swagger: "2.0"
